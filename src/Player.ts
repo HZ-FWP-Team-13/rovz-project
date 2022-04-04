@@ -6,6 +6,8 @@ export default class Player extends GameItem {
 
   private yVel: number;
 
+  private rotation: number;
+
   // KeyboardListener so the player can move
   private keyboard: KeyListener;
 
@@ -18,6 +20,7 @@ export default class Player extends GameItem {
     super('./assets/img/character_robot_walk0.png', maxX - 76, maxY - 92);
     this.xVel = 3;
     this.yVel = 3;
+    this.rotation = 0;
     this.keyboard = new KeyListener();
   }
 
@@ -33,48 +36,38 @@ export default class Player extends GameItem {
     const maxX = canvas.width - this.img.width;
     const minY = 0;
     const maxY = canvas.height - this.img.height;
+    let speed = 0;
 
     // Moving right
-    if (this.keyboard.isKeyDown(KeyListener.KEY_RIGHT) && this.xPos < maxX) {
-      this.xPos += this.xVel;
-      // Limit to the max value
-      if (this.xPos > maxX) {
-        this.xPos = maxX;
-      }
+    if (this.keyboard.isKeyDown(KeyListener.KEY_D) && this.xPos < maxX) {
+      this.rotation += 0.01;
     }
 
     // Moving left
-    if (this.keyboard.isKeyDown(KeyListener.KEY_LEFT) && this.xPos > minX) {
-      this.xPos -= this.xVel;
-      // Limit to the max value
-      if (this.xPos < minX) {
-        this.xPos = minX;
-      }
+    if (this.keyboard.isKeyDown(KeyListener.KEY_A) && this.xPos > minX) {
+      this.rotation -= 0.01;
     }
 
     // Moving up
-    if (this.keyboard.isKeyDown(KeyListener.KEY_UP) && this.yPos > minY) {
-      this.yPos -= this.yVel;
+    if (this.keyboard.isKeyDown(KeyListener.KEY_W) && this.yPos > minY) {
+      speed += this.yVel;
       if (this.yPos < minY) {
         this.yPos = minY;
       }
     }
 
     // Moving down
-    if (this.keyboard.isKeyDown(KeyListener.KEY_DOWN) && this.yPos < maxY) {
-      this.yPos += this.yVel;
+    if (this.keyboard.isKeyDown(KeyListener.KEY_S) && this.yPos < maxY) {
+      speed -= this.yVel;
       if (this.yPos > maxY) {
         this.yPos = maxY;
       }
     }
-  }
 
-  /**
-   *
-   * @returns true if the player is cleaning up
-   */
-  public isCleaning(): boolean {
-    return this.keyboard.isKeyDown(KeyListener.KEY_SPACE);
+    if (speed !== 0) {
+      this.xPos += Math.cos(this.rotation) * speed;
+      this.yPos += Math.sin(this.rotation) * speed;
+    }
   }
 
   /**
@@ -97,5 +90,21 @@ export default class Player extends GameItem {
   increaseSpeed(size: number): void {
     this.xVel += size;
     this.yVel += size;
+  }
+
+  /**
+   *
+   * @returns Rotation value
+   */
+  public getRotation(): number {
+    return this.rotation + (90 * Math.PI) / 180;
+  }
+
+  public moveToRotation() : void {
+    let speed = 0;
+
+    if (this.keyboard.isKeyDown(KeyListener.KEY_UP)) {
+      speed
+    }
   }
 }

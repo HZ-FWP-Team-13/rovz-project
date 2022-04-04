@@ -1,10 +1,13 @@
 import Game from './Game.js';
+import KeyListener from './KeyListener.js';
+import Level from './Level.js';
 import Scene from './Scene.js';
-import Player from './Player.js';
+import Start from './Start.js';
 
-export default class Level extends Scene {
-  // Player
-  private player: Player;
+export default class LevelUp extends Scene {
+  private shouldStart: boolean;
+
+  private keyboard: KeyListener;
 
   /**
    * Creates a new instance of this class
@@ -13,17 +16,17 @@ export default class Level extends Scene {
    */
   public constructor(game: Game) {
     super(game);
-
-    // Create player
-    this.player = new Player(this.game.canvas.width / 2, this.game.canvas.height / 2);
+    this.keyboard = new KeyListener();
+    this.shouldStart = false;
   }
 
   /**
    * Handles any user input that has happened since the last call
    */
   public processInput(): void {
-    // Move the player
-    this.player.move(this.game.canvas);
+    if (this.keyboard.isKeyDown(KeyListener.KEY_P)) {
+      this.shouldStart = true;
+    }
   }
 
   /**
@@ -36,18 +39,15 @@ export default class Level extends Scene {
    * In other words, by returning a Scene object, you can set the next scene to
    * animate.
    *
-   * @param elapsed the time in ms that has been elapsed since the previous
-   *   call
    * @returns a new `Scene` object if the game should start animating that scene
    *   on the next animation frame. If the game should just continue with the
    *   current scene, just return `null`
    */
-  /**
-   *
-   *
-   */
-
-   public update(elapsed: number): Scene {
+  public update(): Scene {
+    if (this.shouldStart) {
+      this.game.getUser().increaseLevel();
+      return new Level(this.game);
+    }
     return null;
   }
 
@@ -57,12 +57,13 @@ export default class Level extends Scene {
   public render(): void {
     // Clear the screen
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
-    this.game.ctx.save();
-
-    this.game.ctx.translate(this.player.getXPos(), this.player.getYPos());
-    this.game.ctx.rotate(this.player.getRotation());
-    this.player.draw(this.game.ctx);
-
-    this.game.ctx.restore();
+    // Show score
+    const centerX = this.game.canvas.width / 2;
+    const line1 = `Level ${this.game.getUser().getLevel()} Clear`
+    this.game.writeTextToCanvas(line1, 128, centerX, 250, 'center', 'red');
+    const msg = `${this.game.getUser().getName()} score: ${this.game.getUser().getScore()}`
+    this.game.writeTextToCanvas(msg, 48, centerX, 450, 'center', 'yellow');
+    this.game.writeTextToCanvas("Type 'p' to proceed to the next level", 48, centerX,
+      550, 'center', 'white');
   }
 }

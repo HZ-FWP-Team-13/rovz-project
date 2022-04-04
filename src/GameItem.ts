@@ -8,16 +8,16 @@ export default abstract class GameItem {
   protected yPos: number;
 
   /**
-   * Creates a new GameItem on a random position
+   * Creates a new GameItem on a given location
    *
    * @param imageSrc the src of the image
-   * @param maxX the max value of the X position
-   * @param maxY the max value of the X position
+   * @param xPos starting X position of GameItem
+   * @param yPos starting Y position of GameItem
    */
-  public constructor(imageSrc: string, maxX: number, maxY: number) {
+  public constructor(imageSrc: string, xPos: number, yPos: number) {
     this.img = Game.loadNewImage(imageSrc);
-    this.xPos = Game.randomNumber(0, maxX);
-    this.yPos = Game.randomNumber(0, maxY);
+    this.xPos = xPos;
+    this.yPos = yPos;
   }
 
   /**
@@ -62,6 +62,6 @@ export default abstract class GameItem {
    * @param ctx the rendering context to draw on
    */
   public draw(ctx: CanvasRenderingContext2D): void {
-    ctx.drawImage(this.img, this.xPos, this.yPos);
+    ctx.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
   }
 }
