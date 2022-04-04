@@ -1,3 +1,4 @@
+import FovOverlay from './FovOverlay.js';
 import GameItem from './GameItem.js';
 import KeyListener from './KeyListener.js';
 
@@ -8,6 +9,8 @@ export default class Player extends GameItem {
 
   private rotation: number;
 
+  private fov: FovOverlay;
+
   // KeyboardListener so the player can move
   private keyboard: KeyListener;
 
@@ -16,12 +19,13 @@ export default class Player extends GameItem {
    * @param maxX the max value of the X position
    * @param maxY the max value of the X position
    */
-  public constructor(maxX: number, maxY: number) {
-    super('./assets/img/character_robot_walk0.png', maxX - 76, maxY - 92);
+  public constructor(xPos: number, yPos: number) {
+    super('./assets/img/cyclist.png', xPos, yPos);
     this.xVel = 3;
     this.yVel = 3;
     this.rotation = 0;
     this.keyboard = new KeyListener();
+    this.fov = new FovOverlay(this.xPos, this.yPos);
   }
 
   /**
@@ -39,35 +43,32 @@ export default class Player extends GameItem {
     let speed = 0;
 
     // Moving right
-    if (this.keyboard.isKeyDown(KeyListener.KEY_D) && this.xPos < maxX) {
+    if (this.keyboard.isKeyDown(KeyListener.KEY_D)) {
       this.rotation += 0.01;
     }
 
     // Moving left
-    if (this.keyboard.isKeyDown(KeyListener.KEY_A) && this.xPos > minX) {
+    if (this.keyboard.isKeyDown(KeyListener.KEY_A)) {
       this.rotation -= 0.01;
     }
 
     // Moving up
-    if (this.keyboard.isKeyDown(KeyListener.KEY_W) && this.yPos > minY) {
+    if (this.keyboard.isKeyDown(KeyListener.KEY_W)) {
       speed += this.yVel;
-      if (this.yPos < minY) {
-        this.yPos = minY;
-      }
     }
 
     // Moving down
-    if (this.keyboard.isKeyDown(KeyListener.KEY_S) && this.yPos < maxY) {
+    if (this.keyboard.isKeyDown(KeyListener.KEY_S)) {
       speed -= this.yVel;
-      if (this.yPos > maxY) {
-        this.yPos = maxY;
-      }
     }
 
     if (speed !== 0) {
       this.xPos += Math.cos(this.rotation) * speed;
       this.yPos += Math.sin(this.rotation) * speed;
     }
+
+    this.fov.setXPosition(this.xPos);
+    this.fov.setYPosition(this.yPos);
   }
 
   /**
@@ -98,13 +99,5 @@ export default class Player extends GameItem {
    */
   public getRotation(): number {
     return this.rotation + (90 * Math.PI) / 180;
-  }
-
-  public moveToRotation() : void {
-    let speed = 0;
-
-    if (this.keyboard.isKeyDown(KeyListener.KEY_UP)) {
-      speed
-    }
   }
 }

@@ -1,10 +1,13 @@
 import Game from './Game.js';
 import Scene from './Scene.js';
 import Player from './Player.js';
+import FovOverlay from './FovOverlay.js';
 
 export default class Level extends Scene {
   // Player
   private player: Player;
+
+  private fov: FovOverlay;
 
   /**
    * Creates a new instance of this class
@@ -16,6 +19,8 @@ export default class Level extends Scene {
 
     // Create player
     this.player = new Player(this.game.canvas.width / 2, this.game.canvas.height / 2);
+
+    this.fov = new FovOverlay(this.player.getXPos(), this.player.getYPos());
   }
 
   /**
@@ -24,6 +29,7 @@ export default class Level extends Scene {
   public processInput(): void {
     // Move the player
     this.player.move(this.game.canvas);
+    this.fov.move(this.game.canvas);
   }
 
   /**
@@ -48,6 +54,9 @@ export default class Level extends Scene {
    */
 
    public update(elapsed: number): Scene {
+    console.log(this.player.getXPos());
+    this.fov.setXPosition(this.player.getXPos());
+    this.fov.setYPosition(this.player.getYPos());
     return null;
   }
 
@@ -62,7 +71,12 @@ export default class Level extends Scene {
     this.game.ctx.translate(this.player.getXPos(), this.player.getYPos());
     this.game.ctx.rotate(this.player.getRotation());
     this.player.draw(this.game.ctx);
+    this.game.ctx.restore();
 
+    this.game.ctx.save();
+    this.game.ctx.translate(this.player.getXPos(), this.player.getYPos());
+    this.game.ctx.rotate(this.fov.getRotation() + this.player.getRotation());
+    this.fov.draw(this.game.ctx);
     this.game.ctx.restore();
   }
 }
