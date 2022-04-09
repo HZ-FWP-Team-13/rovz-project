@@ -53,7 +53,7 @@ export default class Level extends Scene {
    *
    */
 
-   public update(elapsed: number): Scene {
+  public update(elapsed: number): Scene {
     console.log(this.player.getXPos());
     this.fov.setXPosition(this.player.getXPos());
     this.fov.setYPosition(this.player.getYPos());
@@ -69,13 +69,14 @@ export default class Level extends Scene {
     this.game.ctx.save();
 
     this.game.ctx.translate(this.player.getXPos(), this.player.getYPos());
-    this.game.ctx.rotate(this.player.getRotation());
+    // this.game.ctx.rotate(this.player.getRotation());
     this.player.draw(this.game.ctx);
     this.game.ctx.restore();
 
     this.game.ctx.save();
     this.game.ctx.translate(this.player.getXPos(), this.player.getYPos());
-    this.game.ctx.rotate(this.fov.getRotation() + this.player.getRotation());
+    // this.game.ctx.rotate(this.fov.getRotation() + this.player.getRotation());
+    this.game.ctx.rotate(this.fov.getRotation());
     this.fov.draw(this.game.ctx);
     this.game.ctx.restore();
   }

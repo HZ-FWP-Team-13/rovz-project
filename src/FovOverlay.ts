@@ -47,12 +47,11 @@ export default class FovOverlay extends GameItem {
     this.yPos = yPos;
   }
 
-
   /**
    *
    * @returns Rotation value
    */
   public getRotation(): number {
-    return this.rotation + (90 * Math.PI) / 180;
+    return this.rotation;
   }
 }

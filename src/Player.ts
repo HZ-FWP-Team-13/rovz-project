@@ -7,25 +7,23 @@ export default class Player extends GameItem {
 
   private yVel: number;
 
-  private rotation: number;
-
-  private fov: FovOverlay;
+  // private rotation: number;
 
   // KeyboardListener so the player can move
   private keyboard: KeyListener;
 
   /**
    *
-   * @param maxX the max value of the X position
-   * @param maxY the max value of the X position
+   * @param yPos starting X position
+   * @param xPos starting Y position
+   *
    */
   public constructor(xPos: number, yPos: number) {
     super('./assets/img/cyclist.png', xPos, yPos);
     this.xVel = 3;
     this.yVel = 3;
-    this.rotation = 0;
+    // this.rotation = 0;
     this.keyboard = new KeyListener();
-    this.fov = new FovOverlay(this.xPos, this.yPos);
   }
 
   /**
@@ -36,21 +34,17 @@ export default class Player extends GameItem {
    */
   public move(canvas: HTMLCanvasElement): void {
     // Set the limit values
-    const minX = 0;
-    const maxX = canvas.width - this.img.width;
-    const minY = 0;
-    const maxY = canvas.height - this.img.height;
     let speed = 0;
 
     // Moving right
-    if (this.keyboard.isKeyDown(KeyListener.KEY_D)) {
-      this.rotation += 0.01;
-    }
+    // if (this.keyboard.isKeyDown(KeyListener.KEY_D)) {
+    //  this.rotation += 0.01;
+    // }
 
     // Moving left
-    if (this.keyboard.isKeyDown(KeyListener.KEY_A)) {
-      this.rotation -= 0.01;
-    }
+    // if (this.keyboard.isKeyDown(KeyListener.KEY_A)) {
+    //  this.rotation -= 0.01;
+    // }
 
     // Moving up
     if (this.keyboard.isKeyDown(KeyListener.KEY_W)) {
@@ -63,12 +57,10 @@ export default class Player extends GameItem {
     }
 
     if (speed !== 0) {
-      this.xPos += Math.cos(this.rotation) * speed;
-      this.yPos += Math.sin(this.rotation) * speed;
+      // this.xPos += Math.cos(this.rotation) * speed;
+      // this.yPos += Math.sin(this.rotation) * speed;
+      this.yPos -= speed;
     }
-
-    this.fov.setXPosition(this.xPos);
-    this.fov.setYPosition(this.yPos);
   }
 
   /**
@@ -97,7 +89,7 @@ export default class Player extends GameItem {
    *
    * @returns Rotation value
    */
-  public getRotation(): number {
-    return this.rotation + (90 * Math.PI) / 180;
-  }
+  // public getRotation(): number {
+  //  return this.rotation + (90 * Math.PI) / 180;
+  // }
 }
