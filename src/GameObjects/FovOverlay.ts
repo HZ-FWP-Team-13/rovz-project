@@ -1,14 +1,14 @@
-import GameItem from './GameItem.js';
-import KeyListener from './KeyListener.js';
+import KeyListener from "../KeyListener.js";
+import GameObject from "./GameObject.js";
 
-export default class FovOverlay extends GameItem {
+export default class FovOverlay extends GameObject {
   private rotation: number;
 
   // KeyboardListener so the player can move
   private keyboard: KeyListener;
 
   public constructor(xPos: number, yPos: number) {
-    super('./assets/img/fov.png', xPos, yPos);
+    super(xPos, yPos, './assets/img/fov.png');
     this.rotation = 0;
     this.keyboard = new KeyListener();
   }
@@ -19,7 +19,10 @@ export default class FovOverlay extends GameItem {
    *
    * @param canvas the canvas to move over, for max x and y positions
    */
-  public move(canvas: HTMLCanvasElement): void {
+  public move(): void {
+    
+    console.log(this.xPos);
+    console.log(this.yPos);
     // rotate right
     if (this.keyboard.isKeyDown(KeyListener.KEY_RIGHT)) {
       this.rotation += 0.01;
@@ -30,23 +33,6 @@ export default class FovOverlay extends GameItem {
       this.rotation -= 0.01;
     }
   }
-
-  /**
-   *
-   * @param xPos new X position
-   */
-  public setXPosition(xPos: number) : void {
-    this.xPos = xPos;
-  }
-
-  /**
-   *
-   * @param yPos new Y position
-   */
-  public setYPosition(yPos: number) : void {
-    this.yPos = yPos;
-  }
-
   /**
    *
    * @returns Rotation value

@@ -1,0 +1,9 @@
+body {
+    overflow: hidden;
+}
+
+canvas {
+    background-image: url("./../img/background/mapTile_022.png");
+    width: 1920;
+    height: 1080;
+}
