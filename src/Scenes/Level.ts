@@ -28,7 +28,7 @@ export default class Level extends Scene {
     this.game = game;
 
     // Create the player
-    this.player = new Player(this.canvas.width / 2, this.canvas.height);
+    this.player = new Player(this.canvas.width / 2, this.canvas.height - 100);
 
 
     // At this point I have no idea what I'm doing anymore but I cannot get it to work without resorting to magic number nonsense like this.
@@ -124,6 +124,7 @@ export default class Level extends Scene {
    * Handles collisions
    */
   public handleCollisions(): void {
+    // Gameover when player collides with car
     this.cars.forEach((car) => {
       if (this.player.collidesWith(car)) {
         console.log('COLLIDED WITH CAR');
@@ -131,9 +132,14 @@ export default class Level extends Scene {
       }
     });
 
+    // Player wins when passing top
     if (this.player.getYPos() <= 10) {
       this.game.setCurrentScene(new GameOverScreen(this.canvas, true));
     }
 
+    // Bottom bound collision
+    if (this.player.getYPos() > this.canvas.height - this.player.getImageHeight() / 2) {
+      this.player.setYPos(this.canvas.height - this.player.getImageHeight() / 2);
+    }
   }
 }
