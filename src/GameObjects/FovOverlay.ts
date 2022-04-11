@@ -1,3 +1,4 @@
+import Graphics from "../Graphics.js";
 import KeyListener from "../KeyListener.js";
 import GameObject from "./GameObject.js";
 
@@ -11,7 +12,7 @@ export default class FovOverlay extends GameObject {
   public constructor(xPos: number, yPos: number) {
     super(xPos, yPos, './assets/img/fov.png');
     this.rotation = 0;
-    this.rotation_speed = 0.012;
+    this.rotation_speed = 0.03;
     this.keyboard = new KeyListener();
   }
 
@@ -34,6 +35,13 @@ export default class FovOverlay extends GameObject {
     if (this.keyboard.isKeyDown(KeyListener.KEY_LEFT)) {
       this.rotation -= this.rotation_speed;
     }
+
+
+    // toggle FOG fov
+    if (this.keyboard.isKeyDown(KeyListener.KEY_F)) {
+      this.image = Graphics.loadNewImage('./assets/img/fov_fog.png');
+    }
+
   }
   /**
    *

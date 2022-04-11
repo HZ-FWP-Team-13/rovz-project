@@ -30,6 +30,9 @@ export default class TitleScreen extends Scene {
     const ctx = this.canvas.getContext('2d');
     const horizontalCenter = this.canvas.width / 2;
 
+    Graphics.writeTextToCanvas('ROVZ Traffic Safety Game', horizontalCenter, 300, this.canvas, 40, 'blue');
+    Graphics.writeTextToCanvas('Early Demonstration', horizontalCenter, 350, this.canvas, 20, 'grey');
+
     // Gives the player instructions for fullscreen mode.
     // BUG: Text disappears when the user exits fullscreen.
     if (!this.intialFullscreen && !Game.isFullScreen()) {
