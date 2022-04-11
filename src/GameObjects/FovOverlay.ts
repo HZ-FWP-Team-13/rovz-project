@@ -4,12 +4,14 @@ import GameObject from "./GameObject.js";
 export default class FovOverlay extends GameObject {
   private rotation: number;
 
+  private rotation_speed: number;
   // KeyboardListener so the player can move
   private keyboard: KeyListener;
 
   public constructor(xPos: number, yPos: number) {
     super(xPos, yPos, './assets/img/fov.png');
     this.rotation = 0;
+    this.rotation_speed = 0.012;
     this.keyboard = new KeyListener();
   }
 
@@ -25,12 +27,12 @@ export default class FovOverlay extends GameObject {
     console.log(this.yPos);
     // rotate right
     if (this.keyboard.isKeyDown(KeyListener.KEY_RIGHT)) {
-      this.rotation += 0.01;
+      this.rotation += this.rotation_speed;
     }
 
     // rotate left
     if (this.keyboard.isKeyDown(KeyListener.KEY_LEFT)) {
-      this.rotation -= 0.01;
+      this.rotation -= this.rotation_speed;
     }
   }
   /**

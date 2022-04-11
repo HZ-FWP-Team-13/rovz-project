@@ -2,6 +2,7 @@ import Game from '../Game.js';
 import Car from '../GameObjects/Enemies/Car.js';
 import FovOverlay from '../GameObjects/FovOverlay.js';
 import Player from '../GameObjects/Player.js';
+import GameOverScreen from './GameOverScreen.js';
 import Scene from './Scene.js';
 
 export default class Level extends Scene {
@@ -87,6 +88,7 @@ export default class Level extends Scene {
     this.cars.forEach(car => {
       car.draw(ctx);
     });
+    
     ctx.save();
     ctx.translate(this.player.getXPos(), this.player.getYPos());
     ctx.rotate(this.fov.getRotation());
@@ -122,6 +124,16 @@ export default class Level extends Scene {
    * Handles collisions
    */
   public handleCollisions(): void {
-    
+    this.cars.forEach((car) => {
+      if (this.player.collidesWith(car)) {
+        console.log('COLLIDED WITH CAR');
+        this.game.setCurrentScene(new GameOverScreen(this.canvas, false));
+      }
+    });
+
+    if (this.player.getYPos() <= 10) {
+      this.game.setCurrentScene(new GameOverScreen(this.canvas, true));
+    }
+
   }
 }

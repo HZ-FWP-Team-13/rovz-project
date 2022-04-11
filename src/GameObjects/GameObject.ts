@@ -88,4 +88,34 @@ export default abstract class GameObject {
   public getTopBound(): number {
     return this.yPos - this.image.height;
   }
+
+  /**
+   * @returns left bound of the object
+   */
+   public getLeftBound(): number {
+    return this.xPos - this.image.width / 2;
+  }
+
+  /**
+   * @returns right bound of the object
+   */
+  public getRightBound(): number {
+    return this.xPos + this.image.width / 2;
+  }
+
+  /**
+   * @param object Object to check collision with
+   * @returns Whether the objects collide or not
+   */
+   public collidesWith(object: GameObject): boolean {
+    if (
+      (this.getRightBound() >= object.getLeftBound()
+        && this.getLeftBound() <= object.getRightBound())
+      && (this.getTopBound() <= object.getYPos() && this.yPos >= object.getTopBound())
+    ) {
+      console.log(`${this} collided with ${object}`);
+      return true;
+    }
+    return false;
+  }
 }
