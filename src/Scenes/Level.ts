@@ -28,7 +28,7 @@ export default class Level extends Scene {
     this.game = game;
 
     // Create the player
-    this.player = new Player(this.canvas.width / 2, this.canvas.height - 100);
+    this.player = new Player(this.canvas.width / 2, this.canvas.height - 50);
 
 
     // At this point I have no idea what I'm doing anymore but I cannot get it to work without resorting to magic number nonsense like this.
