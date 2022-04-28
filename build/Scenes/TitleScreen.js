@@ -17,6 +17,10 @@ export default class TitleScreen extends Scene {
         const horizontalCenter = this.canvas.width / 2;
         Graphics.writeTextToCanvas('ROVZ Traffic Safety Game', horizontalCenter, 300, this.canvas, 40, 'blue');
         Graphics.writeTextToCanvas('Early Demonstration', horizontalCenter, 350, this.canvas, 20, 'yellow');
+        Graphics.writeTextToCanvas('CONTROLS', horizontalCenter, 375, this.canvas, 20, 'yellow');
+        Graphics.writeTextToCanvas('W and S to move forward and back', horizontalCenter, 400, this.canvas, 20, 'yellow');
+        Graphics.writeTextToCanvas('Left and Right arrow Keys to  turn your head', horizontalCenter, 425, this.canvas, 20, 'yellow');
+        Graphics.writeTextToCanvas('PRESS ENTER TO START', horizontalCenter, 500, this.canvas, 40, 'blue');
         if (!this.intialFullscreen && !Game.isFullScreen()) {
             Graphics.writeTextToCanvas('Please press F11 and F5 to enter fullscreen and reload for the best experience', horizontalCenter, 750, this.canvas, 20, 'black');
         }

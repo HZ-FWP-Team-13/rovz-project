@@ -32,6 +32,10 @@ export default class TitleScreen extends Scene {
 
     Graphics.writeTextToCanvas('ROVZ Traffic Safety Game', horizontalCenter, 300, this.canvas, 40, 'blue');
     Graphics.writeTextToCanvas('Early Demonstration', horizontalCenter, 350, this.canvas, 20, 'yellow');
+    Graphics.writeTextToCanvas('CONTROLS', horizontalCenter, 375, this.canvas, 20, 'yellow');
+    Graphics.writeTextToCanvas('W and S to move forward and back', horizontalCenter, 400, this.canvas, 20, 'yellow');
+    Graphics.writeTextToCanvas('Left and Right arrow Keys to  turn your head', horizontalCenter, 425, this.canvas, 20, 'yellow');
+    Graphics.writeTextToCanvas('PRESS ENTER TO START', horizontalCenter, 500, this.canvas, 40, 'blue');
 
     // Gives the player instructions for fullscreen mode.
     // BUG: Text disappears when the user exits fullscreen.
